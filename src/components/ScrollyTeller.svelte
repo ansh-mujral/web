@@ -2,7 +2,6 @@
     import { onMount } from 'svelte';
     import { fade } from 'svelte/transition';
     import Scroller from "@sveltejs/svelte-scroller";
-    import * as d3 from 'd3';
   
     let count, index, offset, progress;
     index = 0;
@@ -16,6 +15,16 @@
         visualizations_hidden = false;
       }
     }
+
+    // function navigateToSection(sectionIndex) {
+    //     index = sectionIndex;
+    // }
+
+    // let dropdownOpen = false;
+  
+    // function toggleDropdown() {
+    //     dropdownOpen = !dropdownOpen;
+    // }
   
     let sections = [
         {
@@ -23,6 +32,7 @@
             content: `This project involves an in-depth exploratory data analysis of a Recipes and Ratings dataset. By applying various statistical methods and visualization techniques, I uncovered insightful trends and patterns that could significantly impact culinary practices and preferences.`,
             imageUrl: 'RReda.png',
             imageClass: 'project-image',
+            id: 'project1',
             technologies: 'Technologies used: Python, Pandas, Matplotlib, Seaborn',
             link: 'https://keenans04.github.io/RecipesAndRatings/'
         },
@@ -31,6 +41,7 @@
             content: `Focusing on automating data processing and modeling for the Recipes and Ratings dataset, this project streamlines the workflow through pipelines. The goal was to enhance efficiency and reproducibility, ensuring that the data analysis process is more structured and accessible.`,
             imageUrl: 'RRmodel.png', 
             imageClass: 'project-image',
+            id: 'project2',
             technologies: 'Technologies used: Python, Pandas, Matplotlib, Seaborn',
             link: 'https://keenans04.github.io/WhatsTheRating/'
         },
@@ -39,6 +50,7 @@
             content: `A captivating scrollytelling narrative that explores the illustrious career of LeBron James. Using D3.js for interactive storytelling, this project presents LeBron's journey from a promising young talent to one of the greatest basketball players of all time.`,
             imageUrl: 'LeGoat.png',
             imageClass: 'project-image',
+            id: 'project3',
             technologies: 'Technologies used: Python, Pandas, Matplotlib, Seaborn',
             link: 'https://keenans04.github.io/LeGOAT/'
         },
@@ -47,6 +59,7 @@
             content: `PowerAtlas offers an immersive exploration of global energy consumption patterns through interactive data visualizations. This project was designed to provide insights into how different countries consume energy, using advanced data analysis and D3.js to create an engaging, interactive web experience. It highlights the disparities in energy usage and the impact of renewable energy sources across the globe.`,
             imageUrl: 'PowerAtlas.png',
             imageClass: 'project-image',
+            id: 'project4',
             technologies: 'Technologies used: Python, Pandas, Matplotlib, Seaborn',
             link: 'https://keenans04.github.io/PowerAtlas/'
         },
@@ -55,6 +68,7 @@
             content: `This exploratory data analysis (EDA) dives deep into the competitive world of Valorant, analyzing the skill gap between individual players from different regions. By scrutinizing player data and performance metrics, this project sheds light on the factors that contribute to a player's success and how different regions compare in terms of skill level and competitive play style.`,
             imageUrl: 'LeGoat.png',
             imageClass: 'project-image',
+            id: 'project5',
             technologies: 'Technologies used: Python, Pandas, Matplotlib, Seaborn',
             link: 'https://github.com/ansh-mujral/Valorant_EDA' 
         }
@@ -77,40 +91,74 @@
     </div>
       
     <div class="foreground" slot="foreground">
-      <section class="hero">
+        <!-- <div class="dropdown">
+            <button class="dropbtn" on:click={toggleDropdown}>Menu</button>
+            {#if dropdownOpen}
+                <div class="dropdown-content">
+                    {#each sections as section, i}
+                        <a href="javascript:void(0)" on:click={() => {navigateToSection(i); toggleDropdown();}}>{section.title}</a>
+                    {/each}
+                </div>
+            {/if}
+        </div> -->
+      <section id="about-me" class="hero">
         <h1>Ansh Mujral: About Me</h1>
         <h2 class='subhead'>Hi! Welcome to my website. I am a second-year Data Science major at UC San Diego.<br><br>
             My journey in Data Science and Machine Learning is fueled by a profound passion, and my goal is to leverage these skills for the betterment of society. If you have any questions, comments, or simply want to engage in a conversation, feel free to drop me an email. I'm always open to connecting and discussing the exciting world of data!</h2>
-        <!-- <img src='images/lob.webp' alt='LeBron James' class="header-image"/> -->
       </section>
         {#each sections as section, i}
         <section class="scrollable-section">
             {#if i+1 === index}
-            {#if section.imageUrl}
-                <img src={section.imageUrl} alt={section.title} class="project-image"/>
-            {/if}
-            <div class="content" in:fade={{duration: 400 }} out:fade={{duration: 500 }}>
+            <div class="content" id={section.id} in:fade={{duration: 400 }} out:fade={{duration: 500 }}>
                 <div class="project-description">
                     <h1 class='title-content'>{section.title}</h1>
                     <p>{section.content}</p>
                     <p>{section.technologies}</p>
                     <a href={section.link} target="_blank" rel="noopener noreferrer">Check out My Project Here!</a>
+                    <br>
+                    {#if section.imageUrl}
+                        <img src={section.imageUrl} alt={section.title} class="project-image"/>
+                    {/if}
                 </div>
             </div>
             {/if}
         </section>
         {/each}
-      <section class="container">
-        <div class="map-accolades">
-            <div class="map-container" in:fade={{duration: 700 }} out:fade={{duration: 500 }}>
+        <!-- <section class="container">
+            <div>
                 <h1>Contact Me</h1>
             </div>
-            <div class="conclusion" in:fade={{duration: 700 }} out:fade={{duration: 500 }}>
-                <h2 class="conc-title">Conclusion</h2>
-                <!-- <p class='left'>LeBron came into the NBA with great expectations, and for the first part of his career he performed up to par with some of the greats in the game. But to solidify his legacy as a true legend of the sport, he needed to start winning more. Therefore he switched teams and worked together with other stars to win his first two championships with the Miami Heat. After completing everything in the books, LeBron wanted a name for himself and his city, and in his path stood the Warriors dynasty. Against all odds, he still ended up overcoming the Warriors to win a championship for his home team. In recent times, LeBron has done philanthropic work with his I Promise School and focused more on his family in LA. LeBron is the definition of growth, hard work, talent, and perseverance, and his journey proves just why he is the basketball GOAT.</p> -->
+            <div class="contact-item">
+                <h2>Email Me</h2>
+                <a href="mailto:amujral@ucsd.edu" class="contact-link">Send an Email</a>
             </div>
-        </div>
-      </section>
+            <div class="contact-item">
+                <h2>GitHub</h2>
+                <a href="https://github.com/ansh-mujral" class="contact-link">Visit GitHub</a>
+            </div>
+            <div class="contact-item">
+                <h2>Resume</h2>
+                <a href="path/to/your/resume.pdf" class="contact-link" target="_blank">View Resume</a> 
+            </div>
+            <div class="contact-item">
+                <h2>LinkedIn</h2>
+                <a href="https://www.linkedin.com/in/amujral/" class="contact-link">Connect on LinkedIn</a>
+            </div>
+        </section> -->
+        <section id="contact">
+            <div>
+                <h1>Contact Me!</h1>
+                <p>some yap</p>
+            </div>
+            <footer>
+                <ul class="icons">
+                    <li><a href="mailto:amujral@ucsd.edu" title="Email"><i class="fas fa-envelope"></i></a></li>
+                    <li><a href="https://www.linkedin.com/in/amujral/" title="LinkedIn"><i class="fab fa-linkedin"></i></a></li>
+                    <li><a href="https://github.com/ansh-mujral" title="Github"><i class="fab fa-github"></i></a></li>
+                    <li><a href="AnshMujralResume_Mar2024.pdf" title="Resume"><i class="fas fa-file-text"></i></a></li>
+                </ul>
+            </footer>
+        </section>
     </div>
   </Scroller>
   
@@ -150,7 +198,7 @@
       animation: slideInFromTop 0.5s ease-out forwards;
     }
     section {
-      font-family: 'Yantramanav', sans-serif;
+      font-family: 'Monaco', sans-serif;
       height: 100vh;
       text-align: center;
       max-width: 100%; 
@@ -179,12 +227,6 @@
     .hero h1 {
       font-size: 3em;
     }
-  
-    .hero img {
-      max-width: 100%; 
-      max-height: 60vh; 
-      object-fit: contain;
-    }
 
     .hero{
         color: white;
@@ -192,11 +234,10 @@
   
     .content {
       height: 93vh;
-      width: 45vw;
+      width: 95vw;
       position: absolute;
-      left: 53%;
       border: black 2px solid;
-      border-radius: 5px;
+      border-radius: 16px;
       background-color: rgba(255, 255, 255, 0.5);
     }
   
@@ -209,112 +250,111 @@
       font-size: 2em;
       margin-top: 20px;
     }
-  
-    .left{
-      text-align: center;
-      font-size: 20px;
-      margin-top: 20px;
-      padding-left: 10px;
-      padding-right: 10px;
+
+    .content img{
+        padding: 10px;
     }
-  
-    .header-image{
-      animation: slideInBottom 0.5s ease-out forwards;
-      height: 60%;
-      margin: 10px;
-    }
-  
-    .cavaliers-image{
-      max-width: 80%; 
-      max-height: 40vh; 
-      object-fit: contain;
-      margin-top: 10px;
-    }
-    .draft-image{
-      max-width: 80%; 
-      max-height: 30vh; 
-      object-fit: contain;
-      margin-top: 10px;
-    }
-    .heat-image{
-      max-width: 80%; 
-      max-height: 40vh; 
-      object-fit: contain;
-    }
-    .cavaliers-image{
-      max-width: 80%; 
-      max-height: 45vh; 
-      object-fit: contain;
-    }
-    .la-image{
-      max-width: 80%; 
-      max-height: 30vh; 
-      object-fit: contain;
-    }
-    .origins-image{
-      max-width: 80%; 
-      max-height: 60vh; 
-      object-fit: contain;
-      margin-top: 10px;
-    }
+
     .container {
-      display: grid;
+      /* display: grid;
       grid-template-columns: 3fr 1fr; 
       grid-template-rows: auto 1fr;
-      gap: 20px;
+      gap: 20px; */
       height: 95vh;
     }
-  
-    .map-accolades {
-        display: flex;
-        flex-direction: column;
-        margin-top: -30px;
-    }
-  
-    .map-container {
-        animation: fadeIn 0.5s ease-out forwards;
-        margin-bottom: 20px;
-    }
-  
-    .map-container, .conclusion {
-        flex-grow: 1;
-    }
-  
-    .accolades-list {
-        animation: slideInLeft 0.5s ease-out forwards;
-        background-color: rgba(255, 255, 255, 0.5);
-        border-radius: 8px;
-        height: 95vh;
-        padding-left: 20px;
-        padding-right: 20px;
-        text-align: left;
-    }
-  
-    .conclusion {
-        animation: slideInBottom 0.5s ease-out forwards;
-        background-color: rgba(255, 255, 255, 0.5);
-        border-radius: 8px;
-        padding: 10px;
-        margin-bottom: 10px;
-    }
     h1 {
-      font-family: 'Bebas Neue', sans-serif;
+      font-family: 'Monaco', sans-serif;
       font-size: 3em; 
       font-weight: 700;
       letter-spacing: 2px;
-    }
-    .annotation {
-      margin-top: -40px;
-      padding: 10px;
-    }
-    .conc-title{
-      margin-bottom: -7px;
-      margin-top: 3px;
     }
     .title-content{
       padding-left: 5px;
       padding-right: 5px;
     }
+    .dropdown {
+    position: fixed;
+    top: 0;
+    right: 0;
+    padding: 20px;
+    }
+
+    .dropbtn {
+    background-color: #4CAF50;
+    color: white;
+    padding: 16px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    }
+
+    /* Dropdown Content */
+    .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    }
+
+    /* Links inside the dropdown */
+    .dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    }
+
+    /* Change color of dropdown links on hover */
+    .dropdown-content a:hover {background-color: #f1f1f1}
+
+    /* Show the dropdown menu on hover */
+    .dropdown:hover .dropdown-content {
+    display: block;
+    }
+
+    /* Change the background color of the dropdown button when the dropdown content is shown */
+    .dropdown:hover .dropbtn {
+    background-color: #3e8e41;
+    }
+
+    .container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  gap: 10px; /* Reduced gap between the boxes */
+  padding: 40px; /* Padding for the outer container */
+  justify-items: center;
+  align-items: center;
+}
+
+.contact-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  padding: 20px;
+  background-color: rgba(255, 255, 255, 0.7);
+  border-radius: 15px;
+  margin: 5px; /* Ensures boxes are closer together */
+  width: calc(50% - 10px); /* Adjusts width for closer proximity */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.contact-link {
+  color: #007bff;
+  text-decoration: none;
+  font-weight: bold;
+  margin-top: 15px;
+}
+
+/* h1 {
+  grid-column: 1 / -1;
+  text-align: center;
+  color: white; 
+} */
   
   </style>
   
