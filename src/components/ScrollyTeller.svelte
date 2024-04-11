@@ -18,6 +18,14 @@
   
     let sections = [
         {
+            title: 'About Me: Ansh Mujral',
+            type: 'title',
+            interest: `Your descriptive text here. Feel free to reach out through any of the following methods:`,
+            content: `Your descriptive text here. Feel free to reach out through any of the following methods:`,
+            experience: `Your descriptive text here. Feel free to reach out through any of the following methods:`,
+            imageURL: 'me.png'
+        },
+        {
             title: 'Recipes and Ratings Exploratory Data Analysis Project',
             content: `yap`,
             // content: `This project involves an in-depth exploratory data analysis of a Recipes and Ratings dataset. By applying various statistical methods and visualization techniques, I uncovered insightful trends and patterns that could significantly impact culinary practices and preferences.`,
@@ -102,28 +110,32 @@
     </div>
       
     <div class="foreground" slot="foreground">
-        <section id="about-me" class="hero">
-            <h1 class="name" >Ansh Mujral: About Me</h1>
-            <div class="about-me-grid">
-                <div class="about-me-column">
-                    <h2>Interests and Hobbies</h2>
-                    <p>Your interests and hobbies here.</p>
-                </div>
-                <div class="about-me-column">
-                    <h2>About Me</h2>
-                    <p>Your basic description here.</p>
-                    <img class="me" src="me.png" alt="Ansh Mujral">
-                </div>
-                <div class="about-me-column">
-                    <h2>Experiences</h2>
-                    <p>Your experiences here.</p>
-                </div>
-            </div>
-        </section>
         {#each sections as section, i}
         <section class="scrollable-section">
+          {#if section.type === 'title'}
+              {#if i === index}
+                    <div class="hero"  id= 'about-me' in:fade={{duration: 400}} out:fade={{duration: 500}}>
+                        <h1 class='name'>{section.title}</h1>
+                        <div class="about-me-grid">
+                          <div class="about-me-column">
+                              <h2>Interests and Hobbies</h2>
+                              <p>{section.interest}</p>
+                          </div>
+                          <div class="about-me-column">
+                              <h2>About Me</h2>
+                              <p>{section.content}</p>
+                              <img class="me" src={section.imageUrl} alt="Ansh Mujral">
+                          </div>
+                          <div class="about-me-column">
+                              <h2>Experiences</h2>
+                              <p>{section.experience}</p>
+                          </div>
+                        </div>
+                    </div>
+                {/if}
+            {/if}
             {#if section.type === 'contact'}
-              {#if i+1 === index}
+              {#if i === index}
                     <div class="content" in:fade={{duration: 400}} out:fade={{duration: 500}}>
                         <h1 class='title-content'>{section.title}</h1>
                         <p>{section.content}</p>
@@ -136,8 +148,8 @@
                         </div>
                     </div>
                 {/if}
-              {:else}
-                {#if i+1 === index}
+              {:else if section.type != 'title'}
+                {#if i === index}
                     <div class="content" in:fade={{duration: 400}} out:fade={{duration: 500}}>
                         <div class="project-description">
                             <h1 class='title-content'>{section.title}</h1>
@@ -197,7 +209,7 @@
     }
 
     .name{
-      animation: slideInFromTop 0.75s ease-out forwards;
+      animation: slideInFromTop 1s ease-out forwards;
     }
     /* #about-me{
       animation: slideInFromLeft 1s ease-out forwards;
